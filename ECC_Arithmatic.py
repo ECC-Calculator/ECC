@@ -36,4 +36,4 @@ def driver(a, b, p, x1, y1, x2, y2):
     else:
         pointAddition(x1, y1, x2, y2, a, b, p)
 
-driver(2, 3, 11, 1, 2, 4, 5)
+driver(5, 7, 11, 2, 3, 5, 4)
