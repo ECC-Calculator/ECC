@@ -7,7 +7,7 @@ def pointAddition(x1, y1, x2, y2, a, b, p):
     if x1 == x2 and y1 == y2 :
         pointDoubling(x1, y1, a, b, p)
     elif x1 == x2 :
-        print("Addition of two points ({}, {}) and ({}, {}) is = ({}, {})".format(x1, y1, x2, y2, 0, 0))
+        print('Resultant Point : (0, 0)')
     else :
         try :
             k = gmpy2.mul(gmpy2.sub(y2, y1) % p, gmpy2.invert(gmpy2.sub(x2, x1) % p, p)) % p
@@ -19,7 +19,7 @@ def pointAddition(x1, y1, x2, y2, a, b, p):
             if y3 < 0:
                 y3 = y3 + p
             
-            print("Addition of two points ({}, {}) and ({}, {}) is = ({}, {})".format(x1, y1, x2, y2, x3, y3))
+            print('Resultant Point : ({}, {})'.format(x3, y3))
         except Exception as e: 
             print(e)
 
@@ -35,10 +35,16 @@ def pointDoubling(x, y, a, b, p):
         if y3 < 0:
             y3 = y3 + p
         
-        print('Performing Point Doubling on the point ({}, {})'.format(x, y))
         print('Resultant Point : ({}, {})'.format(x3, y3))
     except Exception as e: 
         print(e)
+
+def pointSubtraction(x1, y1, x2, y2, a, b, p):
+    print("Subtracting two points ({}, {}) and ({}, {})".format(x1, y1, x2, y2))
+    y2 = gmpy2.sub(0, y2)
+    if y2 < 0 :
+        y2 = y2 + p
+    pointAddition(x1, y1, x2, y2, a, b, p)
 
 n = len(sys.argv)
 if n != 8 or gmpy2.mpz(sys.argv[1]) == 2 or gmpy2.mpz(sys.argv[1]) == -2 or gmpy2.mpz(sys.argv[2]) == 0:
@@ -52,4 +58,4 @@ else:
     print("B =", sys.argv[2])
     print("User given prime number =", sys.argv[3])
     print("------------------------------------------------------------")
-    pointAddition(gmpy2.mpz(sys.argv[4]), gmpy2.mpz(sys.argv[5]), gmpy2.mpz(sys.argv[6]), gmpy2.mpz(sys.argv[7]), gmpy2.mpz(sys.argv[1]), gmpy2.mpz(sys.argv[2]), gmpy2.mpz(sys.argv[3]))
+    pointSubtraction(gmpy2.mpz(sys.argv[4]), gmpy2.mpz(sys.argv[5]), gmpy2.mpz(sys.argv[6]), gmpy2.mpz(sys.argv[7]), gmpy2.mpz(sys.argv[1]), gmpy2.mpz(sys.argv[2]), gmpy2.mpz(sys.argv[3]))
