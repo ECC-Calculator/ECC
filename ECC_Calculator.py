@@ -158,11 +158,14 @@ def addPoint(x, m, p, A, B):
     # print(x, p - y)
 
 def findPoint(a, b, p):
+    totalPoints = 0
     # if a == 2 or a == -2 or b == 0:
     #     print("INVALID INPUT! For Montgomery Curve a != 2, a != -2 and b != 0")
     #     return None
 
     p = getPrime(p)
+    print("Prime field is:", p)
+    print("")
     for i in range(p):
         m = findM(a, b, i, p)
         # m = findQRForSW(a, b, i, p)
@@ -171,8 +174,13 @@ def findPoint(a, b, p):
         quadraticResidue = legendre(m, p)
         if quadraticResidue == 1:
             addPoint(i, m, p, a, b)
+            totalPoints += 2
         elif quadraticResidue == 0:
             print("({}, {})".format(i, 0))
+            totalPoints += 1
+
+    print("\nNumber of total points (including 0 points) is:", totalPoints)
+    print("---------------------------------------------")
 
 n = len(sys.argv)
 if n != 4 or gmpy2.mpz(sys.argv[1]) == 2 or gmpy2.mpz(sys.argv[1]) == -2 or gmpy2.mpz(sys.argv[2]) == 0:
@@ -180,4 +188,10 @@ if n != 4 or gmpy2.mpz(sys.argv[1]) == 2 or gmpy2.mpz(sys.argv[1]) == -2 or gmpy
     print("Unable to process without 4 arguments. Provide input as per below format.")
     print("format: python <file_name>.py <A> <B> <p> where A != +- 2 and B != 0")    
 else:
+    print("---------------------------------------------")
+    print("Montgomery Curve: By^2 = x^3 + Ax^2 + x\n")
+    print("A =", sys.argv[1])
+    print("B =", sys.argv[2])
+    print("User given prime number =", sys.argv[3])
+    print("---------------------------------------------")
     findPoint(gmpy2.mpz(sys.argv[1]), gmpy2.mpz(sys.argv[2]), gmpy2.mpz(sys.argv[3]))
