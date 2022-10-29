@@ -1,6 +1,10 @@
 #montgomery curve : By^2 = x^3 + Ax^2 + x
 
 import gmpy2, random, sys
+import graph_points as graph
+
+x_coordinates = []
+y_coordinates = []
 
 #gets us the next prime if number isn't prime
 def getPrime(number):
@@ -154,22 +158,17 @@ def addPoint(x, m, p, A, B):
     else:			
       y = tonelli_shanks(m, p)
 
-    print("({}, {})  ({}, {})".format(x, y, x, p-y))		
-    # print(x, p - y)
+    print("({}, {})  ({}, {})".format(x, y, x, p-y))
+    x_coordinates.extend([int(x), int(x)])
+    y_coordinates.extend([int(y), int(p-y)])
 
 def findPoint(a, b, p):
     totalPoints = 0
-    # if a == 2 or a == -2 or b == 0:
-    #     print("INVALID INPUT! For Montgomery Curve a != 2, a != -2 and b != 0")
-    #     return None
-
     p = getPrime(p)
     print("Prime field is:", p)
     print("")
     for i in range(p):
         m = findM(a, b, i, p)
-        # m = findQRForSW(a, b, i, p)
-        # qr = (pow(m, (p - 1) // 2)) % p
         
         quadraticResidue = legendre(m, p)
         if quadraticResidue == 1:
@@ -177,16 +176,19 @@ def findPoint(a, b, p):
             totalPoints += 2
         elif quadraticResidue == 0:
             print("({}, {})".format(i, 0))
+            x_coordinates.append(i)
+            y_coordinates.append(0)
             totalPoints += 1
 
     print("\nNumber of total points (including 0 points) is:", totalPoints)
     print("---------------------------------------------")
+    graph.plot(x_coordinates, y_coordinates)
 
 n = len(sys.argv)
 if n != 4 or gmpy2.mpz(sys.argv[1]) == 2 or gmpy2.mpz(sys.argv[1]) == -2 or gmpy2.mpz(sys.argv[2]) == 0:
     print("INVALID INPUT! Please try again")
     print("Unable to process without 4 arguments. Provide input as per below format.")
-    print("format: python <file_name>.py <A> <B> <p> where A != +- 2 and B != 0")    
+    print("format: python <file_name>.py <A> <B> <p> where A != + 2 and A != -2 and B != 0")    
 else:
     print("---------------------------------------------")
     print("Montgomery Curve: By^2 = x^3 + Ax^2 + x\n")
