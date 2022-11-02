@@ -48,7 +48,6 @@ def pointMultiplication(x, y, k, a, b, p):
     x1 = x
     y1 = y
     idx = gmpy2.bit_length(k)
-    print(idx)
     while idx >= 0:
         if gmpy2.bit_test(k, idx):
             x0, y0 = pointAddition(x0, y0, x1, y1, a, b, p)
