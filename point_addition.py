@@ -5,7 +5,7 @@ import gmpy2, sys
 # Adding 2 points (x1, y1) & (x2, y2)
 def pointAddition(x1, y1, x2, y2, a, b, p):
     if x1 == x2 and y1 == y2 :
-        pointDoubling(x1, y1, a, b, p)
+        print('Both the points are same! Perform point doubling operation instead addition.')
     elif x1 == x2 :
         print("Addition of two points ({}, {}) and ({}, {}) is = ({}, {})".format(x1, y1, x2, y2, 0, 0))
     else :
@@ -23,28 +23,11 @@ def pointAddition(x1, y1, x2, y2, a, b, p):
         except Exception as e: 
             print(e)
 
-# Point Doubling of the point (x, y)
-def pointDoubling(x, y, a, b, p):
-    try :
-        k = gmpy2.mul(gmpy2.add(gmpy2.add(gmpy2.mul(gmpy2.powmod(x, 2, p), 3) % p, gmpy2.mul(gmpy2.mul(2, a) % p, x) % p) % p, 1) % p, gmpy2.invert(gmpy2.mul(gmpy2.mul(2, b) % p, y) % p, p))
-        x3 = gmpy2.sub(gmpy2.sub(gmpy2.sub(gmpy2.mul(b, gmpy2.powmod(k, 2, p)) % p, a) % p, x) % p, x) % p
-        y3 = gmpy2.sub(gmpy2.sub(gmpy2.mul(gmpy2.add(gmpy2.add(gmpy2.mul(2, x) % p, x) % p, a) % p, k) % p, gmpy2.mul(b, gmpy2.powmod(k, 3, p)) % p), y) % p
-
-        if x3 < 0:
-            x3 = x3 + p
-        if y3 < 0:
-            y3 = y3 + p
-        
-        print('Performing Point Doubling on the point ({}, {})'.format(x, y))
-        print('Resultant Point : ({}, {})'.format(x3, y3))
-    except Exception as e: 
-        print(e)
-
 n = len(sys.argv)
 if n != 8 or gmpy2.mpz(sys.argv[1]) == 2 or gmpy2.mpz(sys.argv[1]) == -2 or gmpy2.mpz(sys.argv[2]) == 0:
     print("INVALID INPUT!!! Please try again!")
     print("Unable to process without 8 arguments. Provide input as per below format.")
-    print("format: python <file_name>.py <A> <B> <p> <x1> <y1> <x2> <y2> where A != +- 2 and B != 0") 
+    print("format: python <file_name>.py <A> <B> <p> <x1> <y1> <x2> <y2> where A != 2, A != -2 and B != 0") 
 else:
     print("------------------------------------------------------------")
     print("Montgomery Curve: By^2 = x^3 + Ax^2 + x\n")
