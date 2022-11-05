@@ -6,6 +6,12 @@ import graph_points as graph
 x_coordinates = []
 y_coordinates = []
 
+#hasse's theorem
+def hassesTheorem(prime):
+    upperBound = prime + 1 + gmpy2.mul(2, gmpy2.isqrt(prime))
+    lowerBound = prime + 1 - gmpy2.mul(2, gmpy2.isqrt(prime))
+    print("According to hasse's theorem the total number of points should be in the range of {} {}".format(lowerBound, upperBound))
+
 #gets us the next prime if number isn't prime
 def getPrime(number):
     if gmpy2.is_prime(number):
@@ -181,7 +187,7 @@ def findPoint(a, b, p):
             totalPoints += 1
 
     print("\nNumber of total points (including 0 points) is:", totalPoints)
-    print("---------------------------------------------")
+    print("-----------------------------------------------------------------------------------------")
     graph.plot(x_coordinates, y_coordinates)
 
 n = len(sys.argv)
@@ -190,10 +196,12 @@ if n != 4 or gmpy2.mpz(sys.argv[1]) == 2 or gmpy2.mpz(sys.argv[1]) == -2 or gmpy
     print("Unable to process without 4 arguments. Provide input as per below format.")
     print("format: python <file_name>.py <A> <B> <p> where A != + 2 and A != -2 and B != 0")    
 else:
-    print("---------------------------------------------")
+    print("-----------------------------------------------------------------------------------------")
     print("Montgomery Curve: By^2 = x^3 + Ax^2 + x\n")
     print("A =", sys.argv[1])
     print("B =", sys.argv[2])
     print("User given prime number =", sys.argv[3])
-    print("---------------------------------------------")
+    print("-----------------------------------------------------------------------------------------")
+    hassesTheorem(gmpy2.mpz(sys.argv[3]))
+    print("-----------------------------------------------------------------------------------------")
     findPoint(gmpy2.mpz(sys.argv[1]), gmpy2.mpz(sys.argv[2]), gmpy2.mpz(sys.argv[3]))
